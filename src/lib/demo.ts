@@ -1,0 +1,257 @@
+import type { Data, Task } from './types';
+import { offsetDate } from './utils';
+export const DEMO_USER = 'demo-anna';
+export function createDemo(): Data {
+  const team_id = 'demo-studio';
+  const now = new Date().toISOString();
+  const members: Data['members'] = [
+    {
+      id: DEMO_USER,
+      name: 'Kiss Anna',
+      email: 'anna@studio.example',
+      role: 'owner',
+      job_title: 'Kreatív vezető',
+      color: '#e9ddd5',
+    },
+    {
+      id: 'demo-mark',
+      name: 'Nagy Márk',
+      email: 'mark@studio.example',
+      role: 'member',
+      job_title: 'Grafikus',
+      color: '#dce6d8',
+    },
+    {
+      id: 'demo-lilla',
+      name: 'Szabó Lilla',
+      email: 'lilla@studio.example',
+      role: 'admin',
+      job_title: 'Projektmenedzser',
+      color: '#e4dcf1',
+    },
+    {
+      id: 'demo-david',
+      name: 'Tóth Dávid',
+      email: 'david@studio.example',
+      role: 'member',
+      job_title: 'Szövegíró',
+      color: '#dbe6ef',
+    },
+    {
+      id: 'demo-eszter',
+      name: 'Varga Eszter',
+      email: 'eszter@studio.example',
+      role: 'member',
+      job_title: 'Marketingstratéga',
+      color: '#f2e4c8',
+    },
+  ];
+  const projects: Data['projects'] = [
+    {
+      id: 'p1',
+      team_id,
+      name: 'Őszi márkakampány',
+      description:
+        'Új évszak, új történetek. Integrált őszi kampány tervezése és megvalósítása a közösségi csatornákon.',
+      status: 'active',
+      priority: 'high',
+      start_date: offsetDate(-18),
+      due_date: offsetDate(12),
+      owner_id: DEMO_USER,
+      color: 'peach',
+      icon: 'sparkles',
+      created_at: now,
+    },
+    {
+      id: 'p2',
+      team_id,
+      name: 'Művészetek Hete 2026',
+      description:
+        'Egy hét a kultúra körül. A fesztivál vizuális arculata, kommunikációja és helyszíni anyagai.',
+      status: 'active',
+      priority: 'medium',
+      start_date: offsetDate(-10),
+      due_date: offsetDate(20),
+      owner_id: 'demo-lilla',
+      color: 'sage',
+      icon: 'palette',
+      created_at: now,
+    },
+    {
+      id: 'p3',
+      team_id,
+      name: 'Studio weboldal',
+      description:
+        'Új digitális otthon a stúdiónak. Portfólió, történetek és egy letisztult felhasználói élmény.',
+      status: 'active',
+      priority: 'medium',
+      start_date: offsetDate(-8),
+      due_date: offsetDate(28),
+      owner_id: 'demo-mark',
+      color: 'lavender',
+      icon: 'globe',
+      created_at: now,
+    },
+    {
+      id: 'p4',
+      team_id,
+      name: 'Téli tartalomterv',
+      description: 'Tartalomstratégia és szerkesztőségi naptár a következő negyedévre.',
+      status: 'planned',
+      priority: 'low',
+      start_date: offsetDate(10),
+      due_date: offsetDate(42),
+      owner_id: 'demo-eszter',
+      color: 'sand',
+      icon: 'folder',
+      created_at: now,
+    },
+  ];
+  const rows: [string, string, string, Task['status'], Task['priority'], number, string][] = [
+    ['t1', 'p1', 'Közösségi média kreatívok véglegesítése', 'in_progress', 'high', 0, 'demo-mark'],
+    ['t2', 'p2', 'Sajtóközlemény első verziója', 'review', 'medium', 0, 'demo-david'],
+    ['t3', 'p3', 'Főoldal drótvázának jóváhagyása', 'todo', 'high', 0, DEMO_USER],
+    ['t4', 'p1', 'Hírlevél szövegének megírása', 'in_progress', 'medium', 0, 'demo-eszter'],
+    ['t5', 'p2', 'Nyomdai ajánlatok bekérése', 'todo', 'medium', -2, 'demo-lilla'],
+    ['t6', 'p1', 'Kampány landing oldal ellenőrzése', 'review', 'high', -1, DEMO_USER],
+    ['t7', 'p2', 'Fesztiválplakát tervezése', 'in_progress', 'high', 2, 'demo-mark'],
+    ['t8', 'p3', 'Portfólióprojektek válogatása', 'todo', 'medium', 3, DEMO_USER],
+    ['t9', 'p1', 'Hirdetési kampány indítása', 'todo', 'high', 5, 'demo-eszter'],
+    ['t10', 'p3', 'Bemutatkozó szövegek elkészítése', 'in_progress', 'medium', 7, 'demo-david'],
+    ['t11', 'p4', 'Téli témák összegyűjtése', 'todo', 'low', 12, 'demo-eszter'],
+    ['t12', 'p2', 'Programfüzet tördelése', 'todo', 'medium', 9, 'demo-mark'],
+    ...Array.from(
+      { length: 8 },
+      (_, i) =>
+        [
+          `done${i}`,
+          'p1',
+          [
+            'Kampánybrief összeállítása',
+            'Célcsoportok meghatározása',
+            'Moodboard készítése',
+            'Fotózás megszervezése',
+            'Kulcsüzenetek jóváhagyása',
+            'Médiaterv véglegesítése',
+            'Költségterv elkészítése',
+            'Képi világ kiválasztása',
+          ][i],
+          'done',
+          'medium',
+          -5,
+          members[i % 5].id,
+        ] as [string, string, string, Task['status'], Task['priority'], number, string],
+    ),
+    ['done8', 'p2', 'Vizuális koncepció bemutatása', 'done', 'high', -3, 'demo-mark'],
+    ['done9', 'p2', 'Helyszínek egyeztetése', 'done', 'medium', -4, 'demo-lilla'],
+    ['done10', 'p3', 'Igényfelmérő workshop', 'done', 'medium', -7, DEMO_USER],
+  ];
+  const tasks = rows.map(([id, project_id, title, status, priority, day, assignee_id]) => ({
+    id,
+    team_id,
+    project_id,
+    title,
+    status,
+    priority,
+    due_date: offsetDate(day),
+    assignee_id,
+    description:
+      id === 't1'
+        ? 'Készítsük el az őszi kampány Instagram- és Facebook-kreatívjait. A jóváhagyott moodboard alapján dolgozzunk, és figyeljünk az egységes képi világra.'
+        : 'A részleteket a projekt briefje alapján dolgozzuk ki. Egyeztess a csapattal, és jelezd, ha segítségre van szükséged.',
+    created_at: now,
+  }));
+  return {
+    team: { id: team_id, name: 'Studio North' },
+    members,
+    projects,
+    tasks,
+    checklist: [
+      {
+        id: 'c1',
+        team_id,
+        task_id: 't1',
+        text: 'Instagram posztok (1080 × 1080)',
+        completed: true,
+      },
+      {
+        id: 'c2',
+        team_id,
+        task_id: 't1',
+        text: 'Story változatok (1080 × 1920)',
+        completed: false,
+      },
+      {
+        id: 'c3',
+        team_id,
+        task_id: 't1',
+        text: 'Kreatívok feltöltése jóváhagyásra',
+        completed: false,
+      },
+    ],
+    comments: [
+      {
+        id: 'cm1',
+        team_id,
+        task_id: 't1',
+        author_id: DEMO_USER,
+        body: 'Nagyon jó irány! A második verzió színeivel menjünk tovább. 🙌',
+        created_at: new Date(Date.now() - 3600000).toISOString(),
+      },
+    ],
+    attachments: [],
+    invitations: [],
+    activity: [
+      {
+        id: 'a1',
+        team_id,
+        actor_id: 'demo-mark',
+        message: 'befejezte: Vizuális koncepció bemutatása',
+        created_at: new Date(Date.now() - 18 * 60000).toISOString(),
+      },
+      {
+        id: 'a2',
+        team_id,
+        actor_id: 'demo-lilla',
+        message: 'új feladatot hozott létre: Nyomdai ajánlatok bekérése',
+        created_at: new Date(Date.now() - 52 * 60000).toISOString(),
+      },
+      {
+        id: 'a3',
+        team_id,
+        actor_id: 'demo-david',
+        message: 'hozzászólt: Sajtóközlemény első verziója',
+        created_at: new Date(Date.now() - 94 * 60000).toISOString(),
+      },
+      {
+        id: 'a4',
+        team_id,
+        actor_id: DEMO_USER,
+        message: 'frissítette az Őszi márkakampány projektet',
+        created_at: new Date(Date.now() - 150 * 60000).toISOString(),
+      },
+    ],
+    notifications: [
+      {
+        id: 'n1',
+        team_id,
+        user_id: DEMO_USER,
+        title: 'Új feladatod: Főoldal drótvázának jóváhagyása',
+        task_id: 't3',
+        kind: 'assignment',
+        read: false,
+        created_at: now,
+      },
+      {
+        id: 'n2',
+        team_id,
+        user_id: DEMO_USER,
+        title: 'Márk megemlített egy hozzászólásban',
+        task_id: 't1',
+        kind: 'mention',
+        read: false,
+        created_at: now,
+      },
+    ],
+  };
+}
